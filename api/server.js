@@ -1,19 +1,22 @@
 'use strict'
-
+const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 const router = express.Router();
 
-const port = 5555;
+
 
 
 //** Rotas */
 const indexRoute = require('./routes/indexRoute');
 const loginRoute = require('./routes/loginRoute');
+const cadastroRoute = require('./routes/cadastroRoute');
 const categoriasRoute = require('./routes/categoriasRoute');
+const ativacaoRoute = require('./routes/ativacaoRoute');
 
+dotenv.config();
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -33,8 +36,12 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRoute);
+app.use('/cadastro', cadastroRoute);
 app.use('/login', loginRoute);
 app.use('/categorias', categoriasRoute);
+app.use('/ativacao/', ativacaoRoute);
+
+let port = process.env.PORT;
 
 app.listen(port, () => {
     console.log("API rodando na porta "+ port);
