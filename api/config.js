@@ -14,18 +14,18 @@ const conexao = mysql.createConnection({
 });
 
 
+module.exports = conexao;
+
+// exports.executaQuery = (sqlQry, res) => {
 
 
-exports.executaQuery = (sqlQry, res) => {
+//   conexao.query(sqlQry, function (error, results, fields) {
+//     if (error)
+//       res.json(error);
+//     else
+//       res.json(results);
 
+//     console.log('Query executada com sucesso!');
+//   });
 
-  conexao.query(sqlQry, function (error, results, fields) {
-    if (error)
-      res.json(error);
-    else
-      res.json(results);
-
-    console.log('Query executada com sucesso!');
-  });
-
-}
+// }

@@ -1,6 +1,6 @@
 'use strict'
 
-const config = require('../config');
+const conexao = require('../config');
 const sendgrid = require('../services/emailService');
 const dotenv = require('dotenv');
 const md5 = require("md5");
@@ -16,7 +16,7 @@ let key_auth = process.env.key_auth;
 const enviaEmail = (sendgrid, nome, email, key_auth) => {
 
 
-  let data = email+'-'+key_auth;
+  let data = email + '-' + key_auth;
   let buff = new Buffer(data);
   let base64data = buff.toString('base64');
 
@@ -48,8 +48,6 @@ const enviaEmail = (sendgrid, nome, email, key_auth) => {
 }
 exports.post = async (req, res, next) => {
 
-  console.log(req.body)
-
 
   let nome = req.body.nome;
   let email = req.body.email;
@@ -57,16 +55,37 @@ exports.post = async (req, res, next) => {
   let senhaMD5 = md5(req.body.senha);
 
 
-  if (email !== '' && senha !== '')
+  if (email !== '' && senha !== '') {
 
 
-    config.executaQuery(`INSERT INTO usuarios (nome, email, senha, senhaMD5)
-SELECT * FROM (SELECT '${nome}','${email}', '${senha}', '${senhaMD5}') AS tmp
-WHERE NOT EXISTS ( SELECT email FROM usuarios WHERE email = '${email}'
-) LIMIT 1;` , res);
 
-  enviaEmail(sendgrid, nome, email, key_auth);
+    conexao.query(`INSERT INTO usuarios (nome, email, senha, senhaMD5)
+  SELECT * FROM (SELECT '${nome}','${email}', '${senha}', '${senhaMD5}') AS tmp
+  WHERE NOT EXISTS ( SELECT email FROM usuarios WHERE email = '${email}'
+  ) LIMIT 1;`, function (error, results, fields) {
+      if (error) {
+        res.status(400).send(error);
 
+      }
+      else {
+
+
+        let count = results.affectedRows;
+        if (count == 1) {
+          res.status(200).send({ verificacao: 1 });
+          enviaEmail(sendgrid, nome, email, key_auth);
+        } else {
+
+          res.status(200).send({ verificacao: 0 });
+
+        }
+
+      }
+    });
+
+
+
+  }
 
 }
 

@@ -39,7 +39,7 @@ app.use('/', indexRoute);
 app.use('/cadastro', cadastroRoute);
 app.use('/login', loginRoute);
 app.use('/categorias', categoriasRoute);
-app.use('/ativacao/', ativacaoRoute);
+app.use('/ativacao', ativacaoRoute);
 
 let port = process.env.PORT;
 
