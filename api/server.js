@@ -35,6 +35,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/assets', express.static(__dirname + '/assets'));
+
 app.use('/', indexRoute);
 app.use('/cadastro', cadastroRoute);
 app.use('/login', loginRoute);
