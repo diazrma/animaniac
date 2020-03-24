@@ -13,7 +13,7 @@ const router = express.Router();
 const indexRoute = require('./routes/indexRoute');
 const loginRoute = require('./routes/loginRoute');
 const cadastroRoute = require('./routes/cadastroRoute');
-const categoriasRoute = require('./routes/categoriasRoute');
+const generosRoute = require('./routes/generosRoute');
 const ativacaoRoute = require('./routes/ativacaoRoute');
 
 dotenv.config();
@@ -40,7 +40,7 @@ app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/', indexRoute);
 app.use('/cadastro', cadastroRoute);
 app.use('/login', loginRoute);
-app.use('/categorias', categoriasRoute);
+app.use('/generos', generosRoute);
 app.use('/ativacao', ativacaoRoute);
 
 let port = process.env.PORT;

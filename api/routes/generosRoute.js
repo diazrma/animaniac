@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/categoriasController');
+const controller = require('../controllers/generosController');
 
 router.get('/', controller.get);
 
